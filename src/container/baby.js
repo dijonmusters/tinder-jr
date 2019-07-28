@@ -31,9 +31,8 @@ class Baby extends Component {
   }
 
   judge(opinion) {
-    console.log(this.state);
     const babies = getBabies();
-    const baby = babies.find(baby => baby.url === this.state.selectedBaby.url);
+    const baby = babies.find(baby => baby.id === this.state.selectedBaby.id);
     baby.judgement = opinion;
     rewriteBabies(babies);
     this.props.refresh();
