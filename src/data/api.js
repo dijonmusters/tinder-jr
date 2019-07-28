@@ -1,6 +1,10 @@
 import fileData from '../data/babies';
 
 const getBabies = () => JSON.parse(localStorage.getItem('babies'));
+const getJudgedBabies = () => {
+  const babies = getBabies();
+  return babies.filter(baby => baby.judgement);
+};
 
 const rewriteBabies = babies => {
   localStorage.setItem('babies', JSON.stringify(babies));
@@ -22,4 +26,4 @@ const fetchBabies = async () =>
         }, 1600);
   });
 
-export { fetchBabies, rewriteBabies, getBabies, resetBabies };
+export { fetchBabies, rewriteBabies, getBabies, resetBabies, getJudgedBabies };

@@ -20,7 +20,11 @@ const BabyFace = styled.span`
 
 const NoBabies = () => (
   <Container>
-    <BabyFace>&#128124;</BabyFace>
+    <BabyFace>
+      <span role="img" aria-label="angel baby face">
+        &#128124;
+      </span>
+    </BabyFace>
     <h1>You are out of babies!</h1>
   </Container>
 );

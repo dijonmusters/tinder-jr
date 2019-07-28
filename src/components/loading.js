@@ -29,7 +29,11 @@ const BabyFace = styled.span`
 
 const Loading = () => (
   <Container>
-    <BabyFace>&#128118;</BabyFace>
+    <BabyFace>
+      <span role="img" aria-label="baby face">
+        &#128118;
+      </span>
+    </BabyFace>
     <h1>The stork is delivering more babies...</h1>
   </Container>
 );

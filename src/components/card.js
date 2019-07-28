@@ -61,8 +61,16 @@ const Card = props => {
     <Container>
       <Img src={props.baby.url} />
       <Faces>
-        <Face onClick={() => props.judge('dislike')}>&#128169;</Face>
-        <Face onClick={() => props.judge('like')}>&#128526;</Face>
+        <Face onClick={() => props.judge('dislike')}>
+          <span role="img" aria-label="poo face">
+            &#128169;
+          </span>
+        </Face>
+        <Face onClick={() => props.judge('like')}>
+          <span role="img" aria-label="cool face">
+            &#128526;
+          </span>
+        </Face>
       </Faces>
     </Container>
   );

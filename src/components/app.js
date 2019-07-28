@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Loading from './loading';
 import Baby from '../container/baby';
+import BabyList from '../container/babyList';
 import { fetchBabies } from '../data/api';
 
 const Container = styled.main`
@@ -35,13 +36,14 @@ class App extends Component {
     const { babies } = this.state;
     return (
       <Container>
-        <Title>Tinder Jr.</Title>
-        <p>Find other parents with cute babies</p>
+        <Title>Cool Baby?</Title>
+        <p>Judge babies based on looks ... with hooks</p>
         {babies ? (
           <Baby babies={babies} refresh={this.fetchNewBabies} />
         ) : (
           <Loading />
         )}
+        <BabyList />
       </Container>
     );
   }
@@ -51,5 +53,7 @@ export default App;
 
 // Refactor with hooks
 // - app.js => useEffect
-// - card.js => useEffect, useState, useContext
-// - maybe do baby.js instead and introduce context
+// - baby.js => useEffect for events
+//           => useState for selectedBaby
+//           => useContext for getting and refreshing babies
+//  Talk about testing => research enzyme and react testing library
