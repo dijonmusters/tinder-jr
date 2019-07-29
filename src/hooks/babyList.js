@@ -24,7 +24,8 @@ const renderBaby = ({ id, url, judgement }) => (
 );
 
 const BabyList = () => {
-  const { babies } = null; // ???
+  const { babies } = useContext(BabyContext);
+  console.log(babies);
   const judgedBabies = babies.filter(baby => baby.judgement);
   return <BabyGrid>{judgedBabies.map(renderBaby)}</BabyGrid>;
 };

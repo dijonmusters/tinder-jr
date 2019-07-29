@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Baby from '../containers/baby';
-// import BabyList from '../containers/babyList';
+// import BabyList from '../hooks/babyList';
 // import BabyProvider from '../data/babyFetcher';
 
 const Container = styled.main`
@@ -35,11 +35,8 @@ export default App;
 // baby.js
 // => useEffect for events
 // => useState for babies
+// => use premade hook version
 
-// babyList.js...
-// babyFetcher.js => context
 // app.js
-// => <BabyProvider>
-
-// baby.js
-// => use context for judge and babies
+// => <BabyProvider />
+// => <BabyList />

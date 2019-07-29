@@ -18,4 +18,15 @@ const fetchBabies = async () =>
         }, 1600);
   });
 
-export { fetchBabies, rewriteBabies, getBabies };
+const fetchAllBabies = async () =>
+  new Promise((resolve, reject) => {
+    const cachedData = getBabies();
+    cachedData
+      ? resolve({ babies: cachedData })
+      : setTimeout(() => {
+          rewriteBabies(fileData);
+          resolve({ babies: fileData });
+        }, 1600);
+  });
+
+export { fetchBabies, fetchAllBabies, rewriteBabies, getBabies };
