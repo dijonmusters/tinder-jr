@@ -56,17 +56,17 @@ const Img = styled.img`
   object-fit: cover;
 `;
 
-const Card = props => {
+const Card = ({ baby, judge }) => {
   return (
     <Container>
-      <Img src={props.baby.url} />
+      <Img src={baby.url} />
       <Faces>
-        <Face onClick={() => props.judge('dislike')}>
+        <Face onClick={() => judge('dislike')}>
           <span role="img" aria-label="poo face">
             &#128169;
           </span>
         </Face>
-        <Face onClick={() => props.judge('like')}>
+        <Face onClick={() => judge('like')}>
           <span role="img" aria-label="cool face">
             &#128526;
           </span>

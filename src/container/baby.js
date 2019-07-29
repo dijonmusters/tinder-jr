@@ -1,57 +1,46 @@
-import React, { Component } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Card from '../components/card';
 import NoBabies from '../components/noBabies';
-import { getBabies, rewriteBabies, resetBabies } from '../data/api';
+import { BabyContext } from '../data/babyFetcher';
 
-class Baby extends Component {
-  state = {};
-
-  componentDidMount() {
-    window.addEventListener('keyup', this.handleKey.bind(this));
-    const selectedBaby = this.chooseBaby();
-    this.setState({ selectedBaby });
+const chooseBaby = babies => {
+  const unjudgedBabies = babies.filter(baby => !baby.judgement);
+  if (unjudgedBabies.length > 0) {
+    const randomIndex =
+      Math.floor(Math.random() * unjudgedBabies.length - 1) + 1;
+    return unjudgedBabies[randomIndex];
   }
+  return null;
+};
 
-  componentWillUnmount() {
-    window.removeEventListener('keyup', this.handleKey.bind(this));
+const handleKey = (selected, judge, e) => {
+  const { code } = e;
+  if (code === 'ArrowLeft') {
+    judge(selected, 'dislike');
   }
+  if (code === 'ArrowRight') {
+    judge(selected, 'like');
+  }
+};
 
-  handleKey(e) {
-    const { code } = e;
-    if (code === 'ArrowLeft') {
-      this.judge('dislike');
-    }
-    if (code === 'ArrowRight') {
-      this.judge('like');
-    }
-    if (code === 'Escape') {
-      resetBabies();
-      this.props.refresh();
-    }
-  }
+const Baby = props => {
+  const { babies, judge } = useContext(BabyContext);
+  const baby = chooseBaby(babies);
 
-  judge(opinion) {
-    const babies = getBabies();
-    const baby = babies.find(baby => baby.id === this.state.selectedBaby.id);
-    baby.judgement = opinion;
-    rewriteBabies(babies);
-    this.props.refresh();
-  }
+  const handleInput = e => handleKey(baby, judge, e);
 
-  chooseBaby() {
-    const { babies } = this.props;
-    const randomIndex = Math.floor(Math.random() * babies.length - 1) + 1;
-    return babies[randomIndex];
-  }
+  useEffect(() => {
+    window.addEventListener('keyup', handleInput);
+    return () => {
+      window.removeEventListener('keyup', handleInput);
+    };
+  });
 
-  render() {
-    const { selectedBaby } = this.state;
-    return selectedBaby ? (
-      <Card baby={selectedBaby} judge={this.judge.bind(this)} />
-    ) : (
-      <NoBabies />
-    );
-  }
-}
+  return baby ? (
+    <Card baby={baby} judge={opinion => judge(baby, opinion)} />
+  ) : (
+    <NoBabies />
+  );
+};
 
 export default Baby;

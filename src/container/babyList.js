@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
+import { BabyContext } from '../data/babyFetcher';
 import styled from 'styled-components';
-import { getJudgedBabies } from '../data/api';
 
 const Img = styled.img`
   ${props =>
     props.judgement && props.judgement === 'like'
-      ? 'border: 3px solid green'
-      : 'border: 3px solid red'};
+      ? 'border: 3px solid #15db95'
+      : 'border: 3px solid #f78888'};
   width: 50px;
   height: 50px;
   object-fit: cover;
@@ -19,24 +19,14 @@ const BabyGrid = styled.div`
   bottom: 0;
 `;
 
-class BabyList extends Component {
-  state = {
-    babies: []
-  };
+const renderBaby = ({ id, url, judgement }) => (
+  <Img key={id} src={url} judgement={judgement} />
+);
 
-  componentDidMount() {
-    const babies = getJudgedBabies();
-    this.setState({ babies });
-  }
-
-  renderBaby({ id, url, judgement }) {
-    return <Img key={id} src={url} judgement={judgement} />;
-  }
-
-  render() {
-    const { babies } = this.state;
-    return <BabyGrid>{babies.map(this.renderBaby)}</BabyGrid>;
-  }
-}
+const BabyList = () => {
+  const { babies } = useContext(BabyContext);
+  const judgedBabies = babies.filter(baby => baby.judgement);
+  return <BabyGrid>{judgedBabies.map(renderBaby)}</BabyGrid>;
+};
 
 export default BabyList;
